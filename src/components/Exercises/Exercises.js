@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import { Box, Typography, Stack } from "@mui/material";
 
-import { exerciseOptions, fetchData } from "../utils/fetchData";
+import { exerciseOptions, fetchData } from "../../utils/fetchData";
 import ExerciseCard from "./ExerciseCard";
 
 const Exercises = ({ exercises, setExercises, bodyPart }) => {
@@ -16,7 +16,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 
   const paginate = (e, value) => {
     setCurrentPage(value);
-    window.scrollTo({ top: 1800, behavior: "smooth" });
+    window.scrollTo({ top: 800, behavior: "smooth" });
   }
 
   useEffect(() => {
@@ -39,11 +39,11 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   }, [bodyPart])
 
   return (
-    <Box id="exercises" sx={{ mt: { lg: "110px" } }} mt="50px" p="20px">
-      <Typography variant="h4" mb="12px" ml="20px">
+    <Box id="exercises" sx={{ mt: { lg: "110px" } }} mt="50px" mx="50px">
+      <Typography variant="h4" mb="12px" ml="50px">
         Showing Results
       </Typography>
-      <Typography variant="h5" mb="46px" ml="20px">
+      <Typography variant="h5" mb="46px" ml="50px">
         Click the exercises card to see details
       </Typography>
       <Stack

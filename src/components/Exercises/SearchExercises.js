@@ -5,30 +5,34 @@ import HorizontalScrollbar from "./HorizontalScrollbar";
 
 const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const [search, setSearch] = useState("");
-  const [bodyParts, setBodyParts] = useState([])
+  const [bodyParts, setBodyParts] = useState([]);
 
   useEffect(() => {
     const fetchExercisesData = async () => {
-      const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions)
-      setBodyParts(['all', ...bodyPartsData])
-    }
+      const bodyPartsData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+        exerciseOptions
+      );
+      setBodyParts(["all", ...bodyPartsData]);
+    };
 
-    fetchExercisesData()
-  }, [])
-  
+    fetchExercisesData();
+  }, []);
 
   const handleSearch = async () => {
     if (search) {
       const exercisesData = await fetchData(
         "https://exercisedb.p.rapidapi.com/exercises",
         exerciseOptions
-      ); // fetch data from API
-      const searchedExercises = exercisesData.filter((exercise) => exercise.name.toLowerCase().includes(search.toLowerCase())
-      || exercise.target.toLowerCase().includes(search.toLowerCase())
-      || exercise.equipment.toLowerCase().includes(search.toLowerCase())
-      || exercise.bodyPart.toLowerCase().includes(search.toLowerCase())
-      );   
-      window.scrollTo({ top:1800, left:100, behavior: 'smooth' })
+      );
+      const searchedExercises = exercisesData.filter(
+        (exercise) =>
+          exercise.name.toLowerCase().includes(search.toLowerCase()) ||
+          exercise.target.toLowerCase().includes(search.toLowerCase()) ||
+          exercise.equipment.toLowerCase().includes(search.toLowerCase()) ||
+          exercise.bodyPart.toLowerCase().includes(search.toLowerCase())
+      );
+      window.scrollTo({ top: 1800, left: 100, behavior: "smooth" });
       setSearch("");
       setExercises(searchedExercises);
     }
@@ -77,7 +81,12 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
         </Button>
       </Box>
       <Box sx={{ position: "relative", width: "100%", p: "20px" }}>
-          <HorizontalScrollbar data={bodyParts} isBodyParts bodyPart={bodyPart} setBodyPart={setBodyPart} />
+        <HorizontalScrollbar
+          data={bodyParts}
+          isBodyParts
+          bodyPart={bodyPart}
+          setBodyPart={setBodyPart}
+        />
       </Box>
     </Stack>
   );

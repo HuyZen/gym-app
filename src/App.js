@@ -8,6 +8,10 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import YourExercises from './pages/YourExercises';
 import ExercisesPage from './pages/Exercises';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Profile from './pages/Profile';
+import Blog from './pages/Blog';
 
 const App = () => {
   return (
@@ -18,6 +22,10 @@ const App = () => {
             <Route path='/exercises/:id' element={<ExerciseDetail />}/>
             <Route path='/exercises' element={<ExercisesPage/>}/>
             <Route path='/yourExercises' element={<YourExercises />}/>
+            <Route path='/blog' element={<Blog/>} />
+            <Route path='/sign-in' element={<SignIn/>} />
+            <Route path='/sign-up' element={<SignUp/>} />
+            <Route path='/profile' element={<Profile/>} />
         </Routes>
         <Footer />
     </Box>

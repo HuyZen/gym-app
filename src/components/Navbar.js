@@ -4,11 +4,8 @@ import {
   useTheme,
   AppBar,
   Toolbar,
-  Stack,
   Button,
   Grid,
-  Tabs,
-  Tab,
   Box,
   useMediaQuery,
   Typography,
@@ -21,9 +18,9 @@ import { listItemNav } from "../data/data";
 const Navbar = () => {
   const [value, setValue] = useState(0);
   const theme = useTheme();
-  console.log(theme);
+  // console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  console.log(isMatch);
+  // console.log(isMatch);
 
   return (
     <AppBar
@@ -66,8 +63,8 @@ const Navbar = () => {
               >
                 {listItemNav.map((item) => (
                   // <Tab key={item.id} label={item.title} className="active" component={NavLink} to={item.path} />
-                  <Button sx={{mr:"30px"}}>
-                    <NavLink key={item.id} to={item.path} style={{textDecoration:"none", color:"white"}}>{item.title}</NavLink>
+                  <Button sx={{mr:"30px"}} key={item.id}>
+                    <NavLink to={item.path} style={{textDecoration:"none", color:"white"}}>{item.title}</NavLink>
                   </Button>
                 ))}
               </Typography>
@@ -75,12 +72,16 @@ const Navbar = () => {
             <Grid item xs={1} />
             <Grid item xs={2}>
               <Box>
-                <Button sx={{ marginLeft: "auto" }} variant="outlined">
-                  Login
-                </Button>
-                <Button sx={{ marginLeft: 1 }} variant="outlined">
-                  Sign Up
-                </Button>
+                <Link to="/sign-in" style={{textDecoration:"none"}}>
+                  <Button sx={{ marginLeft: "auto" }} variant="outlined">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/sign-up" style={{textDecoration:"none"}}>
+                  <Button sx={{ marginLeft: 1 }} variant="outlined">
+                    Sign Up
+                  </Button>
+                </Link>
               </Box>
             </Grid>
           </Grid>

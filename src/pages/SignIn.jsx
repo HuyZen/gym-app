@@ -65,7 +65,7 @@ export default function SignIn() {
 
   const uiConfig = {
     signInFlow: "redirect",
-    signInSuccessUrl: "/products",
+    signInSuccessUrl: "/exercises",
     signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
     tosUrl: "<your-tos-url>",
     privacyPolicyUrl: "<your-url>",

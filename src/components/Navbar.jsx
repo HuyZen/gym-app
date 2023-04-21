@@ -10,6 +10,7 @@ import {
   useMediaQuery,
   Typography,
   Avatar,
+  ButtonGroup,
 } from "@mui/material";
 
 import Logo from "../assets/images/Logo.png";
@@ -43,6 +44,12 @@ const Navbar = () => {
     };
   }, []);
 
+  // Change language
+  const changeLanguage = () => {
+    setLanguage(!language);
+  };
+  const[language, setLanguage] = useState(false);
+
   return (
     <AppBar
       position="fixed"
@@ -60,26 +67,30 @@ const Navbar = () => {
           <>
             <Link to="/">
               <img
-                src={Logo}
+                src={"https://www.worldgym.com/images/logos/logo-light.png"}
                 alt="logo"
-                style={{ width: "60px", height: "60px" }}
+                style={{ width: "198x", height: "54px" }}
               />
             </Link>
             <MobileNav />
           </>
         ) : (
           <Grid container sx={{ placeItems: "center" }}>
-            <Grid item xs={1} />
-            <Grid item xs={2}>
+            {/* <Grid item xs={1} /> */}
+            <Grid
+              item
+              xs={3}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
               <Link to="/">
                 <img
-                  src={Logo}
+                  src={"https://www.worldgym.com/images/logos/logo-light.png"}
                   alt="logo"
-                  style={{ width: "60px", height: "60px" }}
+                  style={{ width: "283px", height: "54px" }}
                 />
               </Link>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6} sx={{display:"flex", justifyContent:"flex-end"}}>
               <Typography
               // value={value}
               // textColor="secondary"
@@ -99,12 +110,19 @@ const Navbar = () => {
                 ))}
               </Typography>
             </Grid>
-            <Grid item xs={1} />
-            <Grid item xs={2}>
+            {/* <Grid item xs={1} /> */}
+            <Grid item xs={3} sx={{display:"flex", justifyContent:"center"}}>
               {currentUser ? (
-                <Link to="/profile" style={{ textDecoration: "none" }}>
+                <Link
+                  to="/profile"
+                  style={{
+                    textDecoration: "none",
+                    // display: "flex",
+                    // justifyContent: "center",
+                  }}
+                >
                   <Avatar
-                    sx={{ width: "40px", height: "40px" }}
+                    sx={{ width: "44px", height: "44px" }}
                     src={currentUser.photoURL}
                   />
                 </Link>
@@ -122,6 +140,10 @@ const Navbar = () => {
                   </Link>
                 </Box>
               )}
+              <ButtonGroup variant="outlined" color="primary" sx={{marginLeft:"24px"}}>
+                <Button variant={!language? "contained" : "outlined"} onClick={() => changeLanguage("en")}>EN</Button>
+                <Button variant={language ? "contained" : "outlined"} onClick={() => changeLanguage("vi")}>VI</Button>
+              </ButtonGroup>
             </Grid>
           </Grid>
         )}

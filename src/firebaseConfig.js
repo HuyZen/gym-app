@@ -5,19 +5,21 @@ import { useEffect, useState } from 'react';
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
   // Configure Firebase.
-  const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+      // ...
   };
-  
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = getAuth();
+
+// Custom hook
 export function useAuth() {
   const [currentUser, setCurrentUser] = useState();
   useEffect(() => {
@@ -35,6 +37,7 @@ export const signup=async(email,pass)=>{
 export const logout=async()=>{
   return signOut(auth);
 }
+
 // Change profile 
 const storage=getStorage();
 export async function upload (file,currentUser,setLoading) {

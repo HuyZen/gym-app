@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {Avatar as AvatarMUI, Dialog, DialogTitle} from "@mui/material";
+import { Avatar as AvatarMUI, Dialog, DialogTitle } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Link as LinkMaterial, TextField } from "@mui/material";
@@ -18,43 +18,28 @@ import { auth, logout, upload, useAuth } from "../firebaseConfig";
 import Avatar from "react-avatar-edit";
 
 const theme = createTheme();
-const img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'
+const img =
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [inputName, setInputName] = useState("");
   const nameRef = useRef();
-  
-  // const [imageCrop, setImageCrop] = useState(false);
-  // const [preview, setPreview] = useState(false);
-  // const [profile , setProfile] = useState([])
+
   const currentUser = useAuth();
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [photoURL, setPhotoURL] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png");
-  
-  //Handle change avatar
-
-  // const profileFinal = profile.map((item) => item.preview)
-  // console.log(profileFinal);
-  // const jsonString = JSON.stringify(profileFinal);
-  // const file = new File([jsonString], 'filename.json', { type: 'application/json' });
-  // console.log(file);
-  // const onClose = () => setPreview(null);
-  // const onCrop = (preview) => setPreview(preview);
-  // const saveCropImage = async () => {
-  //   setProfile([...profile, { preview: preview }]);
-  //   setImageCrop(false)
-  // }
+  const [photoURL, setPhotoURL] = useState(
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
+  );
 
   const handleChangeAvt = () => {
     if (photo) {
       upload(photo, currentUser, setLoading);
-      toast.success('Update successful, please reload the page');
-    }else {
-      toast.warning('Please choose a photo');
+      toast.success("Update successful, please reload the page");
+    } else {
+      toast.warning("Please choose a photo");
     }
-
   };
   const handleChoice = (e) => {
     if (e.target.files[0]) {
@@ -67,7 +52,6 @@ const Profile = () => {
     }
   }, [currentUser]);
 
-
   // Handle Logout
   const handleLogout = async () => {
     try {
@@ -79,18 +63,20 @@ const Profile = () => {
     }
   };
 
-
   const handleChangeName = (e) => {
     setInputName(e.target.value);
   };
   const db = getFirestore();
 
   const handleUpdateName = async () => {
-    await updateProfile(currentUser, {
-      displayName: inputName,
-    });
-    window.location.reload();
-    toast.success("Cập nhật thành công, hãy load lại trang");
+    if(inputName) {
+      await updateProfile(currentUser, {
+        displayName: inputName,
+      });
+      toast.success('Update successful, please reload the page');
+    } else {
+      toast.warning('Please enter your name');
+    }
   };
   const user = auth.currentUser;
   if (user !== null) {
@@ -125,45 +111,35 @@ const Profile = () => {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-            }} 
+            }}
           >
             <AvatarMUI
               sx={{
                 bgcolor: "secondary.main",
-                width: "128px",
-                height: "128px",
-                mb:"16px"
+                width: "152px",
+                height: "152px",
+                mb: "16px",
               }}
-            //   src={preview}
+              //   src={preview}
               alt="avatar_Profile"
               src={photoURL}
             />
-
-                {/* <Dialog open={imageCrop} onClose={() => setImageCrop(false)} >
-                    <DialogTitle>Change Your Avatar</DialogTitle>
-                    <Avatar
-                        width={500}
-                        height={400}
-                        onCrop={onCrop}
-                        onClose={onClose}
-                    />
-                    <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ mt: 5, mb: 2, width: "50%", mx: "auto"}}
-                    onClick={saveCropImage}
-                    >
-                    Save
-                    </Button>
-                </Dialog> */}
-            <TextField accept='image/*' type='file' onChange={handleChoice}></TextField>
+            <TextField
+              type={"file"}
+              inputProps={{ accept: "image/*" }}
+              onChange={handleChoice}
+            ></TextField>
             <Button
-                    type="submit"
-                    variant="contained"
-                    sx={loading || !photo ? { mt: 3, mb: 2, width: "70%", opacity:"0.6"} : { mt: 3, mb: 2, width: "70%"}}
-                    onClick={handleChangeAvt}
-                    >
-                    Change Your Avatar
+              type="submit"
+              variant="contained"
+              sx={
+                loading || !photo
+                  ? { mt: 3, mb: 2, width: "70%", opacity: "0.6" }
+                  : { mt: 3, mb: 2, width: "70%" }
+              }
+              onClick={handleChangeAvt}
+            >
+              Change Your Avatar
             </Button>
           </Box>
 
@@ -200,21 +176,21 @@ const Profile = () => {
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ mt: 3, mb: 2, width: "50%" }}
+                sx={inputName ? { mt: 3, mb: 2, width: "50%" } : { mt: 3, mb: 2, width: "50%", opacity: "0.6" }}
                 onClick={handleUpdateName}
               >
                 Change Your Name
               </Button>
               <Box>
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ mt: 3, mb: 2, width: "30%" }}
-                onClick={handleLogout}
-                color="error"
-              >
-                Log out
-              </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, width: "30%" }}
+                  onClick={handleLogout}
+                  color="error"
+                >
+                  Log out
+                </Button>
               </Box>
             </Grid>
           </Grid>

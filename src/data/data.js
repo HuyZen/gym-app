@@ -12,7 +12,7 @@ export const listItemNav = [
     },
     { 
         id: 3,
-        title: "Premium",
+        title: "Pricing",
         path: "/premium",
     },
     {

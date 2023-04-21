@@ -4,6 +4,7 @@ import { Typography, Stack, Button } from "@mui/material";
 import BodyPartImage from "../../assets/icons/body-part.png";
 import TargetImage from "../../assets/icons/target.png";
 import EquipmentImage from "../../assets/icons/equipment.png";
+import { Link } from "react-router-dom";
 
 const Detail = ({ exerciseDetail }) => {
   const { name, bodyPart, target, equipment, gifUrl } = exerciseDetail;
@@ -45,6 +46,9 @@ const Detail = ({ exerciseDetail }) => {
             </Typography>
           </Stack>
         ))}
+        <Link to="/premium" style={{textDecoration:"none"}}>
+          <Button variant="contained" sx={{width:"50%", mt:3, padding:"8px"}}>Try to Premium</Button>
+        </Link>
       </Stack>
     </Stack>
   );

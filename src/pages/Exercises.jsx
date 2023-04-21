@@ -7,7 +7,7 @@ const ExercisesPage = () => {
     const [bodyPart, setBodyPart] = useState("all");
     const [exercises, setExercises] = useState([]);
     return (
-        <Box sx={{marginTop:"120px"}}>
+        <Box sx={{marginTop:"150px"}}>
             <SearchExercises
                 setExercises={setExercises}
                 bodyPart={bodyPart}

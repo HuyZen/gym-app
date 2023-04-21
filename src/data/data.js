@@ -12,8 +12,8 @@ export const listItemNav = [
     },
     { 
         id: 3,
-        title: "Your Exercises",
-        path: "/yourExercises",
+        title: "Premium",
+        path: "/premium",
     },
     {
         id: 4,

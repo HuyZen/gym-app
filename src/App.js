@@ -12,6 +12,8 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import Blog from './pages/Blog';
+import Premium from './pages/Premium';
+import Contact from './pages/Contact';
 
 const App = () => {
   return (
@@ -21,8 +23,8 @@ const App = () => {
             <Route path='/' element={<Home />}/>
             <Route path='/exercises/:id' element={<ExerciseDetail />}/>
             <Route path='/exercises' element={<ExercisesPage/>}/>
-            <Route path='/yourExercises' element={<YourExercises />}/>
-            <Route path='/blog' element={<Blog/>} />
+            <Route path='/premium' element={<Premium />}/>
+            <Route path='/contact' element={<Contact/>} />
             <Route path='/sign-in' element={<SignIn/>} />
             <Route path='/sign-up' element={<SignUp/>} />
             <Route path='/profile' element={<Profile/>} />

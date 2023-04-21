@@ -33,20 +33,6 @@ const ExerciseCard = ({ exercise }) => {
           {" "}
           {exercise.target}{" "}
         </Button>
-
-        <Button
-          sx={{
-            ml: "21px",
-            color: "#000",
-            background: "#e83d3d",
-            fontSize: "14px",
-            borderRadius: "20px",
-            textTransform: "capitalize",
-          }}
-        >
-          {" "}
-          Detail{" "}
-        </Button>
       </Stack>
       <Typography
         ml="21px"

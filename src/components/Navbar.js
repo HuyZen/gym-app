@@ -9,11 +9,13 @@ import {
   Box,
   useMediaQuery,
   Typography,
+  Avatar,
 } from "@mui/material";
 
 import Logo from "../assets/images/Logo.png";
 import MobileNav from "./MobileNav";
 import { listItemNav } from "../data/data";
+import { useAuth } from "../firebaseConfig";
 
 const Navbar = () => {
   const [value, setValue] = useState(0);
@@ -21,6 +23,7 @@ const Navbar = () => {
   // console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   // console.log(isMatch);
+  const currentUser = useAuth()
 
   return (
     <AppBar
@@ -71,18 +74,19 @@ const Navbar = () => {
             </Grid>
             <Grid item xs={1} />
             <Grid item xs={2}>
+              {currentUser ? <Link to="/profile" style={{textDecoration:"none"}}><Avatar sx={{width:"40px", height:"40px"}} src={currentUser.photoURL} /></Link> :
               <Box>
-                <Link to="/sign-in" style={{textDecoration:"none"}}>
-                  <Button sx={{ marginLeft: "auto" }} variant="outlined">
-                    Login
-                  </Button>
-                </Link>
-                <Link to="/sign-up" style={{textDecoration:"none"}}>
-                  <Button sx={{ marginLeft: 1 }} variant="outlined">
-                    Sign Up
-                  </Button>
-                </Link>
-              </Box>
+              <Link to="/sign-in" style={{textDecoration:"none"}}>
+                <Button sx={{ marginLeft: "auto" }} variant="outlined">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/sign-up" style={{textDecoration:"none"}}>
+                <Button sx={{ marginLeft: 1 }} variant="outlined">
+                  Sign Up
+                </Button>
+              </Link>
+            </Box>}
             </Grid>
           </Grid>
         )}

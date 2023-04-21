@@ -6,12 +6,12 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
   // Configure Firebase.
   const firebaseConfig = {
-    apiKey: "AIzaSyCcaGlGB9yVFM_r-4eW9yqaHrKaNCuH4yE",
-    authDomain: "gym-exercises-app-25f23.firebaseapp.com",
-    projectId: "gym-exercises-app-25f23",
-    storageBucket: "gym-exercises-app-25f23.appspot.com",
-    messagingSenderId: "933926849086",
-    appId: "1:933926849086:web:19e78bffc6376a880f1f6f"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
   };
   
 
@@ -37,7 +37,7 @@ export const logout=async()=>{
 }
 // Change profile 
 const storage=getStorage();
-export const upload = async (file,currentUser,setLoading) =>{
+export async function upload (file,currentUser,setLoading) {
   const fileRef = ref(storage, currentUser.uid + '.png');
 
   setLoading(true);
@@ -47,6 +47,7 @@ export const upload = async (file,currentUser,setLoading) =>{
 
   updateProfile(currentUser, {photoURL});
   
-  // setLoading(false);
+  setLoading(false);
+  alert("Upload file success")
 }
 export { auth,storage };

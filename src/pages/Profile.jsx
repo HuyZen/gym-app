@@ -16,36 +16,59 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { auth, logout, upload, useAuth } from "../firebaseConfig";
 import Avatar from "react-avatar-edit";
-// import { Dialog } from 'primereact/dialog';
-import { Button as ButtonCustom } from 'primereact/button';
 
 const theme = createTheme();
 const img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'
 
 const Profile = () => {
-  const currentUser = useAuth();
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-//   const [photo, setPhoto] = useState(null);
   const [inputName, setInputName] = useState("");
   const nameRef = useRef();
-  const [photoURL, setPhotoURL] = useState(null)
+  
+  // const [imageCrop, setImageCrop] = useState(false);
+  // const [preview, setPreview] = useState(false);
+  // const [profile , setProfile] = useState([])
+  const currentUser = useAuth();
+  const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [photoURL, setPhotoURL] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png");
+  
+  //Handle change avatar
 
-const [image, setImage] = useState("");
-  const [imageCrop, setImageCrop] = useState(false);
-  const [preview, setPreview] = useState(false);
-  const [profile , setProfile] = useState([])
-  const [srcImg, setSrcImg] = useState(false)
+  // const profileFinal = profile.map((item) => item.preview)
+  // console.log(profileFinal);
+  // const jsonString = JSON.stringify(profileFinal);
+  // const file = new File([jsonString], 'filename.json', { type: 'application/json' });
+  // console.log(file);
+  // const onClose = () => setPreview(null);
+  // const onCrop = (preview) => setPreview(preview);
+  // const saveCropImage = async () => {
+  //   setProfile([...profile, { preview: preview }]);
+  //   setImageCrop(false)
+  // }
 
-  const profileFinal = profile.map((item) => item.preview)
+  const handleChangeAvt = () => {
+    if (photo) {
+      upload(photo, currentUser, setLoading);
+      toast.success('Update successful, please reload the page');
+    }else {
+      toast.warning('Please choose a photo');
+    }
 
-  const onClose = () => setPreview(null);
-  const onCrop = (preview) => setPreview(preview);
-  const saveCropImage = () => {
-    setProfile([...profile, { preview: preview }]);
-    setImageCrop(false);
-  }
+  };
+  const handleChoice = (e) => {
+    if (e.target.files[0]) {
+      setPhoto(e.target.files[0]);
+    }
+  };
+  useEffect(() => {
+    if (currentUser?.photoURL) {
+      setPhotoURL(currentUser.photoURL);
+    }
+  }, [currentUser]);
 
+
+  // Handle Logout
   const handleLogout = async () => {
     try {
       await logout();
@@ -55,28 +78,8 @@ const [image, setImage] = useState("");
       console.log(error);
     }
   };
-  const handleChangeAvt = async() => {
-      setShow(true)
-      try {
-          upload(photoURL, currentUser)
-      } catch (error) {
-          console.log(error);
-      }
-  }
-  const handleChoice = (e) => {
-    //   if (e.target.files[0]) {
-    //       setPhoto(e.target.files[0])
-    //   }
-    //   console.log("done");
-    const file = e.target.files[0];
-    if(file && file.type.substr(0, 5) === "image") {
-        setImage(file)
-        toast.success('Cập nhật thành công, hãy load lại trang')
-    }else {
-        alert("Please choose an image file")
-        setImage(null)
-    }
-  }
+
+
   const handleChangeName = (e) => {
     setInputName(e.target.value);
   };
@@ -101,11 +104,6 @@ const [image, setImage] = useState("");
       }
     });
   }
-  useEffect(() => {
-    if (currentUser && currentUser.photoURL) {
-      setPhotoURL(currentUser.photoURL);
-    }
-  }, [currentUser]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -134,19 +132,20 @@ const [image, setImage] = useState("");
                 bgcolor: "secondary.main",
                 width: "128px",
                 height: "128px",
+                mb:"16px"
               }}
             //   src={preview}
-              src={profileFinal.length ? profileFinal : img}
-              onClick={() => setImageCrop(true)}
+              alt="avatar_Profile"
+              src={photoURL}
             />
-                <Dialog open={imageCrop} onClose={() => setImageCrop(false)} >
+
+                {/* <Dialog open={imageCrop} onClose={() => setImageCrop(false)} >
                     <DialogTitle>Change Your Avatar</DialogTitle>
                     <Avatar
-                        width={400}
-                        height={300}
+                        width={500}
+                        height={400}
                         onCrop={onCrop}
                         onClose={onClose}
-                        src={srcImg}
                     />
                     <Button
                     type="submit"
@@ -156,27 +155,26 @@ const [image, setImage] = useState("");
                     >
                     Save
                     </Button>
-                </Dialog>
-            <TextField accept='image/*' sx={{display:"none"}} type='file' onChange={handleChoice}></TextField>
+                </Dialog> */}
+            <TextField accept='image/*' type='file' onChange={handleChoice}></TextField>
             <Button
                     type="submit"
                     variant="contained"
-                    sx={{ mt: 5, mb: 2, width: "100%"}}
-                    onClick={() => setImageCrop(true)}
-
+                    sx={loading || !photo ? { mt: 3, mb: 2, width: "70%", opacity:"0.6"} : { mt: 3, mb: 2, width: "70%"}}
+                    onClick={handleChangeAvt}
                     >
                     Change Your Avatar
             </Button>
           </Box>
 
-          <Grid container sx={{ mb: "30px" }} spacing="100px">
-            <Grid item xs>
+          <Grid container sx={{ mb: "30px" }} spacing="40px">
+            <Grid item xs={12}>
               <Typography variant="h6" sx={{ fontWeight: "600" }}>
                 Your email
               </Typography>
               <Typography variant="h7">{currentUser?.email}</Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <Typography variant="h6" sx={{ fontWeight: "600" }}>
                 Password
               </Typography>
@@ -207,8 +205,18 @@ const [image, setImage] = useState("");
               >
                 Change Your Name
               </Button>
+              <Box>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ mt: 3, mb: 2, width: "30%" }}
+                onClick={handleLogout}
+                color="error"
+              >
+                Log out
+              </Button>
+              </Box>
             </Grid>
-            <Grid item></Grid>
           </Grid>
         </Box>
         <ToastContainer />

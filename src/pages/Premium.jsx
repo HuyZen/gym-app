@@ -130,7 +130,7 @@ const tiers = [
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant}>
+                  <Button fullWidth variant={tier.buttonVariant} color='error'>
                     {tier.buttonText}
                   </Button>
                 </CardActions>

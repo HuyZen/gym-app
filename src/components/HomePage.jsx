@@ -28,12 +28,16 @@ const HomePage = () => {
       <Typography fontSize="22px" lineHeight="35px" mb={4}>
         Check out the most effective exercises
       </Typography>
-      <Button
-        variant="contained"
-        sx={{ backgroundColor: "#ff2625", padding: "10px" }}
-      >
-        <Link role="link" to="/exercises" style={{textDecoration:"none", color:"black"}}>Explore Exercises</Link>
-      </Button>
+      <Link role="link" to="/exercises" style={{textDecoration:"none"}}>
+        <button className="button-82-pushable">
+              <span className="button-82-shadow"></span>
+              <span className="button-82-edge"></span>
+              <span className="button-82-front text">
+                Explore Exercises
+            </span>
+        </button>
+      </Link>
+      
       <Typography
         fontWeight={600}
         color="#ff2625"

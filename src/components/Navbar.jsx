@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   useTheme,
   AppBar,
@@ -13,12 +13,13 @@ import {
   ButtonGroup,
 } from "@mui/material";
 
-import Logo from "../assets/images/Logo.png";
 import MobileNav from "./MobileNav";
 import { listItemNav } from "../data/data";
 import { useAuth } from "../firebaseConfig";
+import { ToastContainer, toast } from "react-toastify";
 
 const Navbar = () => {
+  const location = useLocation();
   const [value, setValue] = useState(0);
   const theme = useTheme();
   // console.log(theme);
@@ -45,17 +46,20 @@ const Navbar = () => {
   }, []);
 
   // Change language
-  const changeLanguage = () => {
+  const changeLanguage = (lng) => {
     setLanguage(!language);
+    if(lng === 'vi') {
+      toast.warning("Ngôn ngữ tiếng Việt đang được phát triển, vui lòng đợi bản cập nhật sau");
+    }
   };
-  const[language, setLanguage] = useState(false);
+  const [language, setLanguage] = useState(false);
 
   return (
     <AppBar
       position="fixed"
       style={{
         backgroundImage:
-          "linear-gradient(90deg, rgba(126,126,128,1) 0%, rgba(249,101,101,1) 35%, rgba(231,235,134,1) 100%)",
+          "linear-gradient(90deg, rgba(8,7,8,1) 0%, rgba(189,25,25,1) 20%, rgba(26,26,26,1) 100%)",
         visibility: isNavbarVisible ? "visible" : "hidden",
         transition: "visibility 0.3s",
         transform: isNavbarVisible ? "translateY(0)" : "translateY(-100%)",
@@ -90,7 +94,11 @@ const Navbar = () => {
                 />
               </Link>
             </Grid>
-            <Grid item xs={6} sx={{display:"flex", justifyContent:"flex-end"}}>
+            <Grid
+              item
+              xs={6}
+              sx={{ display: "flex", justifyContent: "flex-end" }}
+            >
               <Typography
               // value={value}
               // textColor="secondary"
@@ -111,7 +119,11 @@ const Navbar = () => {
               </Typography>
             </Grid>
             {/* <Grid item xs={1} /> */}
-            <Grid item xs={3} sx={{display:"flex", justifyContent:"center"}}>
+            <Grid
+              item
+              xs={3}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
               {currentUser ? (
                 <Link
                   to="/profile"
@@ -129,24 +141,55 @@ const Navbar = () => {
               ) : (
                 <Box>
                   <Link to="/sign-in" style={{ textDecoration: "none" }}>
-                    <Button sx={{ marginLeft: "auto" }} variant="outlined">
+                    <Button
+                      sx={{ marginLeft: "auto" }}
+                      variant={
+                        location.pathname === "/sign-in"
+                          ? "contained"
+                          : "outlined"
+                      }
+                      color="error"
+                    >
                       Login
                     </Button>
                   </Link>
                   <Link to="/sign-up" style={{ textDecoration: "none" }}>
-                    <Button sx={{ marginLeft: 1 }} variant="outlined">
+                    <Button
+                      sx={{ marginLeft: 1 }}
+                      variant={
+                        location.pathname === "/sign-up"
+                          ? "contained"
+                          : "outlined"
+                      }
+                      color="error"
+                    >
                       Sign Up
                     </Button>
                   </Link>
                 </Box>
               )}
-              <ButtonGroup variant="outlined" color="primary" sx={{marginLeft:"24px"}}>
-                <Button variant={!language? "contained" : "outlined"} onClick={() => changeLanguage("en")}>EN</Button>
-                <Button variant={language ? "contained" : "outlined"} onClick={() => changeLanguage("vi")}>VI</Button>
+              <ButtonGroup
+                variant="outlined"
+                color="error"
+                sx={{ marginLeft: "24px" }}
+              >
+                <Button
+                  variant={!language ? "contained" : "outlined"}
+                  onClick={() => changeLanguage("en")}
+                >
+                  EN
+                </Button>
+                <Button
+                  variant={language ? "contained" : "outlined"}
+                  onClick={() => changeLanguage("vi")}
+                >
+                  VI
+                </Button>
               </ButtonGroup>
             </Grid>
           </Grid>
         )}
+        <ToastContainer />
       </Toolbar>
     </AppBar>
   );

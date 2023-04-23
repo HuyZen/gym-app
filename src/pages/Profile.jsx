@@ -1,21 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Avatar as AvatarMUI, Dialog, DialogTitle } from "@mui/material";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import { Link as LinkMaterial, TextField } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { TextField, Grid, Box, Typography, Container, Avatar, CssBaseline, Button} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import { updateProfile } from "firebase/auth";
 import "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { auth, logout, upload, useAuth } from "../firebaseConfig";
-import Avatar from "react-avatar-edit";
 
 const theme = createTheme();
 const img =
@@ -113,7 +104,7 @@ const Profile = () => {
               alignItems: "center",
             }}
           >
-            <AvatarMUI
+            <Avatar
               sx={{
                 bgcolor: "secondary.main",
                 width: "152px",

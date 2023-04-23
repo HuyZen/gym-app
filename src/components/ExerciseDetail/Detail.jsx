@@ -47,7 +47,13 @@ const Detail = ({ exerciseDetail }) => {
           </Stack>
         ))}
         <Link to="/premium" style={{textDecoration:"none"}}>
-          <Button variant="contained" sx={{width:"50%", mt:3, padding:"8px"}}>Try to Premium</Button>
+          <button className="button-82-pushable">
+            <span className="button-82-shadow"></span>
+            <span className="button-82-edge"></span>
+            <span className="button-82-front text">
+              Try to Premium
+          </span>
+        </button>
         </Link>
       </Stack>
     </Stack>
